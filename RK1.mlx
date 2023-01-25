@@ -1,0 +1,29 @@
+%This program demonstrates the RK 4th order of 1st order method with ploting of graph
+%dy/dx=y2(1-2x) where y(0)=1 h=0.1 upto x=3 plot to compare with the analytical soln
+clc
+clear all
+x0=0;xn=3;y0=1;h=0.1;
+f=@(x,y) (y^2)*(1-2*x);     %Data extracted from the IVP
+
+x=x0:h:xn                   %Forms an array with comkmo diff =h
+n=length(x)-1               %Numbe rof intermediate points
+y=zeros(1,n+1)              %Creates a row matirx of zeros
+y(1)=y0;                    %inital value of y
+
+for i=1:n
+        K1=h*f(x(i),y(i));
+        K2=h*f(x(i)+0.5*h,y(i)+0.5*K1);
+        K3=h*f(x(i)+0.5*h,y(i)+0.5*K2);
+        K4=h*f(x(i)+h,y(i)+K3);
+        y(i+1)=y(i)+(1/6)*(K1+2*K2+2*K3+K4);
+end
+y01=y(2)
+y02=y(3)
+
+ye=eval(dsolve('Dy=(y^2)*(1-2*x)','y(0)=1.0','x'));
+plot(x,y,'*',x,ye,'r')
+grid on;
+xlabel('x-axis')
+ylabel('y-axis')
+title('Solution of IVP using RK-4 method')
+legend('Numerical solution','Exact Solution')
