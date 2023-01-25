@@ -1,0 +1,18 @@
+%This program demonstrates RK 4th degree of 2nd order differential eqn
+%Use the runge ktta foruth order method to find y(0.1)fro the IVP
+%y"-x2y'-2xy=1,
+%given y(0)=1,y'(0)=0
+syms x y z
+x0=0;y0=1;z0=0;h=0.1; f=@(z)z;
+g=@(x,y,z)1+2*x*y+x^2*z
+K1=h*f(z0)
+L1=h*g(x0,y0,z0)
+K2=h*f(z0+L1/2)
+L2=h*g(x0+0.5*h,y0+0.5*K1,z0+0.5*L1)
+K3=h*f(z0+L2/2)
+L3=h*g(x0+0.5*h,y0+0.5*K2,z0+L2/2)
+K4=h*f(z0+L3)
+L4=h*g(x0+h,y0+K3,z0+L3)
+
+y01=y0+(1/6)*(K1+2*K2+2*K3+K4)
+z01=z0+(1/6)*(L1+2*L2+2*L3+L4)
